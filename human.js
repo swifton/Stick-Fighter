@@ -8,22 +8,14 @@ function human(neckX, neckY, len){
 
   this.alignGenitals = alignGenitals;
   function alignGenitals(x,y) {
-    this.leg1.x1 = x;
-    this.leg1.y1 = y;
-    this.leg2.x1 = x;
-    this.leg2.y1 = y;
-    this.body.x3 = x;
-    this.body.y3 = y;
+    this.leg1.x1 = x; this.leg2.x1 = x; this.body.x3 = x;
+    this.leg1.y1 = y; this.leg2.y1 = y; this.body.y3 = y;
   }
 
   this.alignNeck = alignNeck;
   function alignNeck(x, y) {
-    this.arm1.x1 = x;
-    this.arm1.y1 = y;
-    this.arm2.x1 = x;
-    this.arm2.y1 = y;
-    this.body.x1 = x;
-    this.body.y1 = y;
+    this.arm1.x1 = x; this.arm2.x1 = x; this.body.x1 = x;
+    this.arm1.y1 = y; this.arm2.y1 = y; this.body.y1 = y;
   }
 
   this.footFixed = footFixed;
@@ -56,13 +48,6 @@ function human(neckX, neckY, len){
     }
   }
   
-  this.walk = walk;
-  function walk() {
-    var legs = this.orderLegs();
-    if (legs[0].memory.length == 0) legs[0].memory = firstLegWalk.slice(0);
-    if (legs[1].memory.length == 0) legs[1].memory = secondLegWalk.slice(0);
-  }
-
   this.orderLegs = orderLegs;
   function orderLegs() {
     if (this.leg1.th1 > this.leg2.th2) return [this.leg2, this.leg1];
@@ -78,7 +63,7 @@ function human(neckX, neckY, len){
       if (limb.frames == 0) {
         var newMove = limb.memory.splice(0,1)[0];
         limb.setMove(newMove); 
-        if (newMove === walk1r || newMove == walk2r) this.groundLeg = limb;
+        if (newMove != undefined && (newMove[0] === walk1r || newMove[0] == walk2r)) this.groundLeg = limb;
       }
     }
   }

@@ -3,7 +3,7 @@ function doKeyDown(e) {
   console.log(i)
 
   if (i == 39){
-    character.walk();
+    walk(character);
   }
 
   if (i == 69) {

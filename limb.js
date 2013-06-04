@@ -32,9 +32,9 @@ function limb(x1, y1, th1, th2, len) {
   this.setMove = setMove;
   function setMove(move) {
     if (move == undefined) {delta = [0,0]; return;}
-    this.delta = [(move.fin1 - this.th1)/move.frames, (move.fin2 - this.th2)/move.frames];
-    this.frames = move.frames;
-    this.totalFrames = move.frames;
+    this.delta = [(move[0].fin1 - this.th1)/move[1], (move[0].fin2 - this.th2)/move[1]];
+    this.frames = move[1];
+    this.totalFrames = move[1];
   }
 
   this.frames = 0;
