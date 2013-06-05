@@ -1,9 +1,11 @@
-function limb(x1, y1, th1, th2, len) {
+function limb(x1, y1, th1, th2, len, defaultNext, currentMove) {
   this.x1 = x1;
   this.y1 = y1;
   this.th1 = th1;
   this.th2 = th2;
   this.len = len;
+  this.defaultNext = defaultNext;
+  this.currentMove = currentMove;
   
   this.computeDown = computeDown;
   function computeDown() {
@@ -32,9 +34,10 @@ function limb(x1, y1, th1, th2, len) {
   this.setMove = setMove;
   function setMove(move) {
     if (move == undefined) {delta = [0,0]; return;}
-    this.delta = [(move[0].fin1 - this.th1)/move[1], (move[0].fin2 - this.th2)/move[1]];
-    this.frames = move[1];
-    this.totalFrames = move[1];
+    this.frames = Math.abs(move.fin1 - this.th1)/move.speed;
+    if (this.frames != 0) this.delta = [(move.fin1 - this.th1)/this.frames, (move.fin2 - this.th2)/this.frames];
+//    this.totalFrames = move[1];
+    this.defaultNext = move.defaultNext;
   }
 
   this.frames = 0;

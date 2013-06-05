@@ -2,9 +2,11 @@ function human(neckX, neckY, len){
   this.arm1 = new limb(neckX, neckY, 70, -70, len);
   this.arm2 = new limb(neckX, neckY, 110, 60, len);
   this.body = new limb(neckX, neckY, 90, 90, len);
-  this.leg1 = new limb(this.body.x3, this.body.y3, 70, 70, len);
-  this.leg2 = new limb(this.body.x3, this.body.y3, 110, 110, len);
+  this.leg1 = new limb(this.body.x3, this.body.y3, 70, 70, len, standRL);
+  this.leg2 = new limb(this.body.x3, this.body.y3, 110, 110, len, standLL);
   this.groundLeg = this.leg1;
+  this.direction = 1;
+  this.state = "stand";
 
   this.alignGenitals = alignGenitals;
   function alignGenitals(x,y) {
@@ -50,9 +52,21 @@ function human(neckX, neckY, len){
   
   this.orderLegs = orderLegs;
   function orderLegs() {
-    if (this.leg1.th1 > this.leg2.th2) return [this.leg2, this.leg1];
+    if (this.leg1.th1*this.direction > this.leg2.th1*this.direction) return [this.leg2, this.leg1];
     return [this.leg1, this.leg2];
   }
+
+  this.foreLeg = foreLeg;
+  function foreLeg() {
+    if (this.leg1.th1*this.direction >= this.leg2.th1*this.direction) return this.leg2;
+    return this.leg1;
+  }
+
+  this.hindLeg = hindLeg;
+  function hindLeg() {
+    if (this.leg1.th1*this.direction <= this.leg2.th1*this.direction) return this.leg2;
+    return this.leg1;
+  }    
 
   this.nextMove = nextMove;
   function nextMove() {
@@ -61,12 +75,19 @@ function human(neckX, neckY, len){
     for (var j in limbs) {
       limb = limbs[j];
       if (limb.frames == 0) {
-        var newMove = limb.memory.splice(0,1)[0];
-        limb.setMove(newMove); 
-        if (newMove != undefined && (newMove[0] === walk1r || newMove[0] == walk2r)) this.groundLeg = limb;
+        var newMove;
+        if (limb.defaultNext != undefined) {newMove = limb.defaultNext;
+//        var newMove = limb.memory.splice(0,1)[0];        
+        if (this.state == "walk") {
+          if (limb.currentMove == walk2R) newMove = walk1L;
+          if (limb.currentMove == walk2L) newMove = walk1R;
+        } 
+        limb.setMove(newMove);
+        limb.currentMove = newMove; 
+        if (newMove != undefined && (newMove == walk1R || newMove == walk2R)) this.groundLeg = limb;
+ }
       }
     }
   }
-
 }
 
