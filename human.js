@@ -77,15 +77,14 @@ function human(neckX, neckY, len){
       if (limb.frames == 0) {
         var newMove;
         if (limb.defaultNext != undefined) {newMove = limb.defaultNext;
-//        var newMove = limb.memory.splice(0,1)[0];        
         if (this.state == "walk") {
           if (limb.currentMove == walk2R) newMove = walk1L;
           if (limb.currentMove == walk2L) newMove = walk1R;
         } 
-        limb.setMove(newMove);
+        limb.setMove(newMove, this.direction);
         limb.currentMove = newMove; 
         if (newMove != undefined && (newMove == walk1R || newMove == walk2R)) this.groundLeg = limb;
- }
+        }
       }
     }
   }

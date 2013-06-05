@@ -9,19 +9,21 @@ function doKeyDown(e) {
   }
 
   if (i == 37){ //left arrow
-    character.direction *= -1;
+    reverse(character);
   }
 
-  if (i == 69) {
-//    character.arm1.memory = firstHandPunch.slice(0);
+  if (i == 69) { // E
+    character.arm1.defaultNext = punchL;
   }
 
-  if (i == 81) {
+  if (i == 65) { // A
 //    character.arm2.memory = secondHandPunch.slice(0);
+    character.arm2.defaultNext = punchR1;
   }
   
-  if (i == 87) {
+  if (i == 81) { // Q
 //    character.arm2.memory = secondHandPunch2.slice(0);
+    character.arm2.defaultNext = punch2R1;
   }
 }
 
@@ -30,8 +32,6 @@ function doKeyUp(e) {
   
   if (i == 39) {
     character.state = "stand"
-//    character.leg1.memory = [];
-  //  character.leg2.memory = [];
   }
 }
 

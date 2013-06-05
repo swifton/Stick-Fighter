@@ -8,7 +8,9 @@ function GameLoop() {
 
   character.moveLimbs();
   character.footFixed(character.groundLeg);
-  
+ 
+//console.log(character.arm1.frames)
+ 
   gLoop = setTimeout(GameLoop, 10);
 }
 

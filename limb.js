@@ -32,16 +32,24 @@ function limb(x1, y1, th1, th2, len, defaultNext, currentMove) {
 
   
   this.setMove = setMove;
-  function setMove(move) {
-    if (move == undefined) {delta = [0,0]; return;}
-    this.frames = Math.abs(move.fin1 - this.th1)/move.speed;
-    if (this.frames != 0) this.delta = [(move.fin1 - this.th1)/this.frames, (move.fin2 - this.th2)/this.frames];
-//    this.totalFrames = move[1];
+  function setMove(move, dir) {
+    this.delta = [0,0];
+    if (move == undefined) return;
+    var fin1, fin2;
+    if (dir == 1) {
+      fin1 = move.fin1;
+      fin2 = move.fin2;
+    }
+    else {
+      fin1 = 180 - move.fin1;
+      fin2 = 180 - move.fin2;
+    }
+    this.frames = Math.round(Math.abs(fin1 - this.th1)/move.speed);
+    if (this.frames != 0) this.delta = [(fin1 - this.th1)/this.frames, (fin2 - this.th2)/this.frames];
     this.defaultNext = move.defaultNext;
   }
 
   this.frames = 0;
-  this.totalFrames = 0;
   this.memory = new Array;
 }
 
