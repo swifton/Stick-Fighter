@@ -1,7 +1,7 @@
 function human(neckX, neckY, len){
-  this.arm1 = new limb(neckX, neckY, 70, -70, len);
-  this.arm2 = new limb(neckX, neckY, 110, 60, len);
-  this.body = new limb(neckX, neckY, 90, 90, len);
+  this.arm1 = new limb(neckX, neckY, 70, -70, len, standRA);
+  this.arm2 = new limb(neckX, neckY, 110, 60, len, standLA);
+  this.body = new limb(neckX, neckY, 90, 90, len, standB);
   this.leg1 = new limb(this.body.x3, this.body.y3, 70, 70, len, standRL);
   this.leg2 = new limb(this.body.x3, this.body.y3, 110, 110, len, standLL);
   this.groundLeg = this.leg1;
@@ -72,19 +72,23 @@ function human(neckX, neckY, len){
   function nextMove() {
     var limbs = [this.leg1, this.leg2, this.arm1, this.arm2, this.body];
     var limb;
+    var newMove;
     for (var j in limbs) {
       limb = limbs[j];
       if (limb.frames == 0) {
-        var newMove;
         if (limb.defaultNext != undefined) {newMove = limb.defaultNext;
-        if (this.state == "walk") {
-          if (limb.currentMove == walk2R) newMove = walk1L;
-          if (limb.currentMove == walk2L) newMove = walk1R;
-        } 
+          if (this.state == "walk") {
+            if (limb.currentMove == walk2R) newMove = walk1L;
+            if (limb.currentMove == walk2L) newMove = walk1R;
+          } 
+        }
+        if (limb.memory[1] > 0) {
+          limb.memory -= 1;
+          if (limb.memory[1] == 0) newMove = limb.memory[0];
+        }
         limb.setMove(newMove, this.direction);
         limb.currentMove = newMove; 
-        if (newMove != undefined && (newMove == walk1R || newMove == walk2R)) this.groundLeg = limb;
-        }
+        if (limb.currentMove != undefined && (limb.currentMove == walk1R || limb.currentMove == walk2R)) this.groundLeg = limb;
       }
     }
   }

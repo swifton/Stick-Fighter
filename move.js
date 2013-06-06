@@ -11,6 +11,7 @@ function walk(human) {
   var foreleg = human.foreLeg()
   foreleg.defaultNext = walk1R;
   human.hindLeg().defaultNext = walk1L;
+  character.state = "walk";
 }
 
 function reverse(human) {
@@ -27,28 +28,30 @@ function reverse(human) {
 
 var standLL = new position(110, 110, 1/2);
 var standRL = new position(70, 70, 1/2);
-var standRA = new position(110, 60, 1, standRA);
-var standLA = new position(70, -70, 1, standLA);
+var standLA = new position(110, 60, 1);
+var standRA = new position(70, -70, 1);
+var standB = new position(90, 90, 1);
 standLL.defaultNext = standLL;
 standRL.defaultNext = standRL;
 standLA.defaultNext = standLA;
 standRA.defaultNext = standRA;
+standB.defaultNext = standB;
 
 var walk2R = new position(110, 110, 1/2, standLL); 
 var walk1R = new position(90, 105, 1/2, walk2R); 
 var walk2L = new position(70, 70, 1/2, standRL);
 var walk1L = new position(90, 130 , 1/2, walk2L); 
 
-var unpunchL = new position(70, -70, 3, standLA);
-var punchL = new position(0, 0, 5, unpunchL); 
+var unpunchR = new position(70, -70, 3, standRA);
+var punchR = new position(0, 0, 5, unpunchR); 
 
-var unpunchR = new position(110, 60, 4, standRA);
-var punchR3 = new position(70, -20, 4, unpunchR);
-var punchR2 = new position(-20, -20, 5, punchR3);
-var punchR1 = new position(70, -20, 4, punchR2);
+var unpunchL = new position(110, 60, 4, standLA);
+var punchL3 = new position(70, -20, 4, unpunchL);
+var punchL2 = new position(-20, -20, 5, punchL3);
+var punchL1 = new position(70, -20, 4, punchL2);
 
-var unpunch2R = new position(110, 60, 4, standRA);
-var punch2R3 = new position(210, 0, 4, unpunch2R);
-var punch2R2 = new position(340, 0, 8, punch2R3);
-var punch2R1 = new position(210, 0, 4, punch2R2);
+var unpunch2L = new position(110, 60, 4, standLA);
+var punch2L3 = new position(210, 0, 4, unpunch2L);
+var punch2L2 = new position(340, 0, 8, punch2L3);
+var punch2L1 = new position(210, 0, 4, punch2L2);
 

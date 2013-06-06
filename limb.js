@@ -50,7 +50,7 @@ function limb(x1, y1, th1, th2, len, defaultNext, currentMove) {
   }
 
   this.frames = 0;
-  this.memory = new Array;
+  this.memory = [0, 0];
 }
 
 function down(x, y, th, len) {
