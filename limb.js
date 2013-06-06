@@ -45,6 +45,7 @@ function limb(x1, y1, th1, th2, len, defaultNext, currentMove) {
       fin2 = 180 - move.fin2;
     }
     this.frames = Math.round(Math.abs(fin1 - this.th1)/move.speed);
+    if (this.frames == 0) this.frames = Math.round(Math.abs(fin2 - this.th2)/move.speed);
     if (this.frames != 0) this.delta = [(fin1 - this.th1)/this.frames, (fin2 - this.th2)/this.frames];
     this.defaultNext = move.defaultNext;
   }

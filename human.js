@@ -1,6 +1,6 @@
 function human(neckX, neckY, len){
-  this.arm1 = new limb(neckX, neckY, 70, -70, len, standRA);
-  this.arm2 = new limb(neckX, neckY, 110, 60, len, standLA);
+  this.arm1 = new limb(neckX, neckY, 80, 70, len, standRAWalk);
+  this.arm2 = new limb(neckX, neckY, 110, 60, len, standLAWalk);
   this.body = new limb(neckX, neckY, 90, 90, len, standB);
   this.leg1 = new limb(this.body.x3, this.body.y3, 70, 70, len, standRL);
   this.leg2 = new limb(this.body.x3, this.body.y3, 110, 110, len, standLL);
@@ -68,6 +68,18 @@ function human(neckX, neckY, len){
     return this.leg1;
   }    
 
+  this.foreArm = foreArm;
+  function foreArm() {
+    if (this.arm1.th1*this.direction >= this.arm2.th1*this.direction) return this.arm2;
+    return this.arm1;
+  }
+
+  this.hindArm = hindArm;
+  function hindArm() {
+    if (this.arm1.th1*this.direction <= this.arm2.th1*this.direction) return this.arm2;
+    return this.arm1;
+  }    
+
   this.nextMove = nextMove;
   function nextMove() {
     var limbs = [this.leg1, this.leg2, this.arm1, this.arm2, this.body];
@@ -80,17 +92,25 @@ function human(neckX, neckY, len){
           if (this.state == "walk") {
             if (limb.currentMove == walk2R) newMove = walk1L;
             if (limb.currentMove == walk2L) newMove = walk1R;
+            if (limb.currentMove == walk2RA) newMove = walk1LA;
+            if (limb.currentMove == walk2LA) newMove = walk1RA;
           } 
         }
         if (limb.memory[1] > 0) {
-          limb.memory -= 1;
+          limb.memory[1] -= 1;
           if (limb.memory[1] == 0) newMove = limb.memory[0];
         }
-        limb.setMove(newMove, this.direction);
-        limb.currentMove = newMove; 
+        this.setMove(limb, newMove);        
         if (limb.currentMove != undefined && (limb.currentMove == walk1R || limb.currentMove == walk2R)) this.groundLeg = limb;
       }
     }
   }
+ 
+  this.setMove = setMove;
+  function setMove(limb, move) {
+    limb.setMove(move, this.direction);
+    limb.currentMove = move; 
+  }
 }
+
 

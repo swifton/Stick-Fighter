@@ -20,4 +20,7 @@ function drawHuman(human) {
   line.setAttribute("y2", currentLimb.y3);
   }
 
+  var head = document.getElementById("head");
+  head.setAttribute("cx", human.body.x1);
+  head.setAttribute("cy", human.body.y1 - 12);
 }
